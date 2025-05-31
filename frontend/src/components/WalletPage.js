@@ -76,30 +76,54 @@ function WalletPage() {
 
   if (!walletId) {
     return (
-      <div style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
-        <h2>Setup Wallet</h2>
+      <div className="wallet-container">
+        <h2 style={{ marginBottom: '30px', color: '#333' }}>Setup Wallet</h2>
         <form onSubmit={setupWallet}>
-          <div style={{ marginBottom: '10px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <input
               type="text"
               placeholder="Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              style={{ width: '100%', padding: '8px' }}
+              style={{ 
+                width: '100%', 
+                padding: '15px', 
+                border: '2px solid #e0e0e0', 
+                borderRadius: '8px',
+                fontSize: '16px',
+                boxSizing: 'border-box'
+              }}
             />
           </div>
-          <div style={{ marginBottom: '10px' }}>
+          <div style={{ marginBottom: '20px' }}>
             <input
               type="number"
               placeholder="Initial Balance (optional)"
               value={initialBalance}
               onChange={(e) => setInitialBalance(parseFloat(e.target.value) || 0)}
-              style={{ width: '100%', padding: '8px' }}
+              style={{ 
+                width: '100%', 
+                padding: '15px', 
+                border: '2px solid #e0e0e0', 
+                borderRadius: '8px',
+                fontSize: '16px',
+                boxSizing: 'border-box'
+              }}
             />
           </div>
-          <button type="submit" disabled={loading} style={{ width: '100%', padding: '10px' }}>
-            {loading ? 'Setting up...' : 'Submit'}
+          <button 
+            type="submit" 
+            disabled={loading} 
+            style={{ 
+              width: '100%', 
+              padding: '15px', 
+              fontSize: '16px',
+              fontWeight: 'bold',
+              borderRadius: '8px'
+            }}
+          >
+            {loading ? 'Setting up...' : 'Create Wallet'}
           </button>
         </form>
       </div>
@@ -107,53 +131,107 @@ function WalletPage() {
   }
 
   return (
-    <div style={{ padding: '20px', maxWidth: '400px', margin: '0 auto' }}>
-      <h2>Wallet Dashboard</h2>
+    <div className="wallet-container">
+      <h2 style={{ marginBottom: '30px', color: '#333' }}>Wallet Dashboard</h2>
+      
       {wallet && (
-        <div style={{ marginBottom: '20px', padding: '10px', border: '1px solid #ccc' }}>
-          <h3>{wallet.name}</h3>
-          <p>Balance: ${wallet.balance}</p>
+        <div style={{ 
+          marginBottom: '30px', 
+          padding: '25px', 
+          border: '2px solid #007bff', 
+          borderRadius: '10px',
+          backgroundColor: '#f8f9fa',
+          textAlign: 'center'
+        }}>
+          <h3 style={{ margin: '0 0 15px 0', color: '#007bff', fontSize: '20px' }}>
+            Welcome, {wallet.name}!
+          </h3>
+          <p style={{ 
+            margin: '0', 
+            fontSize: '28px', 
+            fontWeight: 'bold', 
+            color: '#333'
+          }}>
+            Balance: ${wallet.balance.toFixed(2)}
+          </p>
         </div>
       )}
       
-      <h3>Make Transaction</h3>
+      <h3 style={{ marginBottom: '20px', color: '#333' }}>Make Transaction</h3>
+      
       <form onSubmit={executeTransaction}>
-        <div style={{ marginBottom: '10px' }}>
+        <div style={{ marginBottom: '20px' }}>
           <input
             type="number"
-            placeholder="Amount"
+            step="0.01"
+            placeholder="Enter amount"
             value={amount}
             onChange={(e) => setAmount(e.target.value)}
             required
-            style={{ width: '100%', padding: '8px' }}
+            style={{ 
+              width: '100%', 
+              padding: '15px', 
+              border: '2px solid #e0e0e0', 
+              borderRadius: '8px',
+              fontSize: '16px',
+              boxSizing: 'border-box'
+            }}
           />
         </div>
-        <div style={{ marginBottom: '10px' }}>
-          <label>
-            <input
-              type="radio"
-              value="CREDIT"
-              checked={transactionType === 'CREDIT'}
-              onChange={(e) => setTransactionType(e.target.value)}
-            /> Credit
-          </label>
-          <label style={{ marginLeft: '10px' }}>
-            <input
-              type="radio"
-              value="DEBIT"
-              checked={transactionType === 'DEBIT'}
-              onChange={(e) => setTransactionType(e.target.value)}
-            /> Debit
-          </label>
+        
+        <div style={{ marginBottom: '25px', textAlign: 'left' }}>
+          <div style={{ marginBottom: '10px' }}>
+            <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <input
+                type="radio"
+                value="CREDIT"
+                checked={transactionType === 'CREDIT'}
+                onChange={(e) => setTransactionType(e.target.value)}
+                style={{ marginRight: '10px', transform: 'scale(1.2)' }}
+              /> 
+              <span style={{ fontSize: '16px' }}>Credit (Add Money)</span>
+            </label>
+          </div>
+          <div>
+            <label style={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
+              <input
+                type="radio"
+                value="DEBIT"
+                checked={transactionType === 'DEBIT'}
+                onChange={(e) => setTransactionType(e.target.value)}
+                style={{ marginRight: '10px', transform: 'scale(1.2)' }}
+              /> 
+              <span style={{ fontSize: '16px' }}>Debit (Spend Money)</span>
+            </label>
+          </div>
         </div>
-        <button type="submit" disabled={loading} style={{ width: '100%', padding: '10px' }}>
+        
+        <button 
+          type="submit" 
+          disabled={loading} 
+          style={{ 
+            width: '100%', 
+            padding: '15px', 
+            fontSize: '16px',
+            fontWeight: 'bold',
+            borderRadius: '8px'
+          }}
+        >
           {loading ? 'Processing...' : 'Submit Transaction'}
         </button>
       </form>
       
-      <div style={{ marginTop: '20px' }}>
-        <Link to="/transactions" style={{ textDecoration: 'none', color: 'blue' }}>
-          View Transactions →
+      <div style={{ marginTop: '30px', textAlign: 'center' }}>
+        <Link 
+          to="/transactions" 
+          style={{ 
+            textDecoration: 'none', 
+            color: '#007bff', 
+            fontWeight: '600',
+            fontSize: '16px'
+          }}
+        >
+          View Transaction History →
         </Link>
       </div>
     </div>
