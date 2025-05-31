@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const walletRoutes = require('./routes/walletRoutes');
 require('dotenv').config();
@@ -6,7 +7,7 @@ require('dotenv').config();
 const app = express();
 const PORT = process.env.PORT || 3000;
 
-// Middleware
+app.use(cors()); // This allows all origins - good for development
 app.use(express.json());
 
 // MongoDB connection
