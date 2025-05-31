@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const walletRoutes = require('./routes/walletRoutes');
+require('dotenv').config();
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -9,7 +10,7 @@ const PORT = process.env.PORT || 3000;
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect('mongodb://localhost:27017/wallet_system', {
+mongoose.connect(process.env.MONGODB_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 })

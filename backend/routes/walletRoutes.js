@@ -131,11 +131,12 @@ router.post('/transact/:walletId', async (req, res) => {
   }
 });
 
-// 3. Fetch transactions - GET /transactions
+// Fetch transactions - GET /transactions
 router.get('/transactions', async (req, res) => {
   try {
+    // skip determines how many documents to skip before starting to return results
+    // e.g. skip=10 means skip first 10 transactions
     const { walletId, skip = 0, limit = 10 } = req.query;
-
     if (!walletId) {
       return res.status(400).json({ error: 'walletId is required' });
     }

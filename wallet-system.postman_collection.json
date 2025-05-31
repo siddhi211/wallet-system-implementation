@@ -1,0 +1,189 @@
+{
+	"info": {
+		"_postman_id": "d66bf8ee-8e9d-499b-8a21-40a9cf048a10",
+		"name": "wallet-system",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "34128983"
+	},
+	"item": [
+		{
+			"name": "heath- check server running",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/health",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"health"
+					]
+				},
+				"description": "Generated from cURL: curl -X GET http://localhost:3000/health"
+			},
+			"response": []
+		},
+		{
+			"name": "POST /setup",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"balance\": 100.5612,\n    \"name\": \"My Test Wallet\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/setup",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"setup"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:3000/setup \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"balance\": 100.5612,\n    \"name\": \"My Test Wallet\"\n  }'"
+			},
+			"response": []
+		},
+		{
+			"name": "Credit Transaction (POST /transact/:walletId)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": 25.75,\n    \"description\": \"Recharge\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/transact/683b5c0cd5cec24525fdfc0f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"transact",
+						"683b5c0cd5cec24525fdfc0f"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:3000/transact/WALLET_ID \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"amount\": 25.75,\n    \"description\": \"Recharge\"\n  }'"
+			},
+			"response": []
+		},
+		{
+			"name": "Debit Transaction (POST /transact/:walletId)",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"amount\": -15.25,\n    \"description\": \"Purchase\"\n  }",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:3000/transact/683b5c0cd5cec24525fdfc0f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"transact",
+						"683b5c0cd5cec24525fdfc0f"
+					]
+				},
+				"description": "Generated from cURL: curl -X POST http://localhost:3000/transact/WALLET_ID \\\n  -H \"Content-Type: application/json\" \\\n  -d '{\n    \"amount\": -15.25,\n    \"description\": \"Purchase\"\n  }'"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Transactions (GET /transactions)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/transactions?walletId=683b5c0cd5cec24525fdfc0f&skip=0&limit=10",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"transactions"
+					],
+					"query": [
+						{
+							"key": "walletId",
+							"value": "683b5c0cd5cec24525fdfc0f"
+						},
+						{
+							"key": "skip",
+							"value": "0"
+						},
+						{
+							"key": "limit",
+							"value": "10"
+						}
+					]
+				},
+				"description": "Generated from cURL: curl -X GET \"http://localhost:3000/transactions?walletId=WALLET_ID&skip=0&limit=10\""
+			},
+			"response": []
+		},
+		{
+			"name": "Get Wallet Details (GET /wallet/:id)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:3000/wallet/683b5c0cd5cec24525fdfc0f",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"wallet",
+						"683b5c0cd5cec24525fdfc0f"
+					]
+				},
+				"description": "Generated from cURL: curl -X GET http://localhost:3000/wallet/WALLET_ID"
+			},
+			"response": []
+		}
+	]
+}
