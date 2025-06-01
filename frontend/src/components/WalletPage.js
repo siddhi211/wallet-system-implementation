@@ -60,6 +60,16 @@ function WalletPage() {
 
   const executeTransaction = async (e) => {
     e.preventDefault();
+    
+    // Add validation for debit transactions
+    if (transactionType === 'DEBIT') {
+      const debitAmount = Math.abs(parseFloat(amount));
+      if (debitAmount > wallet.balance) {
+        alert(`Insufficient balance! You cannot debit $${debitAmount.toFixed(2)} when your current balance is $${wallet.balance.toFixed(2)}.`);
+        return;
+      }
+    }
+    
     setLoading(true);
     try {
       const transactionAmount = transactionType === 'DEBIT' ? -Math.abs(parseFloat(amount)) : Math.abs(parseFloat(amount));
@@ -74,9 +84,14 @@ function WalletPage() {
       if (response.ok) {
         fetchWallet();
         setAmount('');
+      } else {
+        // Handle server errors
+        const errorData = await response.json();
+        alert(`Transaction failed: ${errorData.message || 'Unknown error'}`);
       }
     } catch (error) {
       console.error('Error executing transaction:', error);
+      alert('Transaction failed. Please try again.');
     }
     setLoading(false);
   };
