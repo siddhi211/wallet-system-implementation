@@ -3,6 +3,13 @@ import { Link } from 'react-router-dom';
 
 const API_BASE = process.env.REACT_APP_API_URL || 'http://localhost:3000';
 
+const formatNumber = (amount) => {
+  return amount.toLocaleString('en-US', {
+    minimumFractionDigits: 2,
+    maximumFractionDigits: 2
+  });
+};
+
 function WalletPage() {
   const [walletId, setWalletId] = useState(localStorage.getItem('walletId'));
   const [wallet, setWallet] = useState(null);
@@ -77,7 +84,7 @@ function WalletPage() {
   if (!walletId) {
     return (
       <div className="wallet-container">
-        <h2 style={{ marginBottom: '30px', color: '#333' }}>Setup Wallet</h2>
+        <h1 style={{ marginBottom: '30px', color: '#333' }}>💰 Create Pro Wallet 💳</h1>
         <form onSubmit={setupWallet}>
           <div style={{ marginBottom: '20px' }}>
             <input
@@ -151,7 +158,7 @@ function WalletPage() {
             fontWeight: 'bold', 
             color: '#333'
           }}>
-            Balance: ${wallet.balance.toFixed(2)}
+            Balance: ${formatNumber(wallet.balance)}
           </p>
         </div>
       )}
