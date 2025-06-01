@@ -19,6 +19,26 @@ function WalletPage() {
   const [transactionType, setTransactionType] = useState('CREDIT');
   const [loading, setLoading] = useState(false);
 
+  // Add logout function
+  const handleLogout = () => {
+    // Remove wallet data from localStorage
+    localStorage.removeItem('walletId');
+    // You can also remove other wallet-related data if stored
+    localStorage.removeItem('username');
+    localStorage.removeItem('walletData');
+    
+    // Reset component state
+    setWalletId(null);
+    setWallet(null);
+    setUsername('');
+    setInitialBalance(0);
+    setAmount('');
+    setTransactionType('CREDIT');
+    
+    // Optional: Show confirmation
+    alert('Logged out successfully!');
+  };
+
   const fetchWallet = useCallback(async () => {
     try {
       const response = await fetch(`${API_BASE}/wallet/${walletId}`);
@@ -153,7 +173,32 @@ function WalletPage() {
 
   return (
     <div className="wallet-container">
-      <h2 style={{ marginBottom: '30px', color: '#333' }}>Wallet Dashboard</h2>
+      {/* Add logout button at the top */}
+      <div style={{ 
+        display: 'flex', 
+        justifyContent: 'space-between', 
+        alignItems: 'center',
+        marginBottom: '20px'
+      }}>
+        <h2 style={{ margin: '0', color: '#333' }}>Wallet Dashboard</h2>
+        <button
+          onClick={handleLogout}
+          style={{
+            padding: '10px 20px',
+            backgroundColor: '#dc3545',
+            color: 'white',
+            border: 'none',
+            borderRadius: '5px',
+            cursor: 'pointer',
+            fontSize: '14px',
+            fontWeight: 'bold'
+          }}
+          onMouseOver={(e) => e.target.style.backgroundColor = '#c82333'}
+          onMouseOut={(e) => e.target.style.backgroundColor = '#dc3545'}
+        >
+          Logout
+        </button>
+      </div>
       
       {wallet && (
         <div style={{ 
