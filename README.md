@@ -50,7 +50,7 @@ MONGODB_URI=your_mongodb_connection_string
 ``` 
 # In Frontend:
 ```bash
-BACKEND_APP_API_URL=your_backend_api_url
+REACT_APP_API_URL=your_backend_api_url
 ```        
 ## 4. Run the Application
 ```bash
