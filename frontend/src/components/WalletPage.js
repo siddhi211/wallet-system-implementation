@@ -82,7 +82,7 @@ function WalletPage() {
           <div style={{ marginBottom: '20px' }}>
             <input
               type="text"
-              placeholder="Username"
+              placeholder="Enter Username"
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
@@ -100,7 +100,6 @@ function WalletPage() {
             <input
               type="number"
               placeholder="Initial Balance (optional)"
-              value={initialBalance}
               onChange={(e) => setInitialBalance(parseFloat(e.target.value) || 0)}
               style={{ 
                 width: '100%', 
