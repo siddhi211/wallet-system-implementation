@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 const API_BASE = process.env.BACKEND_APP_API_URL || 'http://localhost:3000';
@@ -12,13 +12,7 @@ function WalletPage() {
   const [transactionType, setTransactionType] = useState('CREDIT');
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    if (walletId) {
-      fetchWallet();
-    }
-  }, [walletId]);
-
-  const fetchWallet = async () => {
+  const fetchWallet = useCallback(async () => {
     try {
       const response = await fetch(`${API_BASE}/wallet/${walletId}`);
       if (response.ok) {
@@ -28,7 +22,13 @@ function WalletPage() {
     } catch (error) {
       console.error('Error fetching wallet:', error);
     }
-  };
+  }, [walletId]);
+
+  useEffect(() => {
+    if (walletId) {
+      fetchWallet();
+    }
+  }, [walletId, fetchWallet]);
 
   const setupWallet = async (e) => {
     e.preventDefault();

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 
 const API_BASE = process.env.BACKEND_APP_API_URL || 'http://localhost:3000';
@@ -11,13 +11,7 @@ function TransactionsPage() {
   const itemsPerPage = 10;
   const walletId = localStorage.getItem('walletId');
 
-  useEffect(() => {
-    if (walletId) {
-      fetchTransactions();
-    }
-  }, [walletId]);
-
-  const fetchTransactions = async () => {
+  const fetchTransactions = useCallback(async () => {
     try {
       const response = await fetch(`${API_BASE}/transactions/?walletId=${walletId}`);
       if (response.ok) {
@@ -27,7 +21,13 @@ function TransactionsPage() {
     } catch (error) {
       console.error('Error fetching transactions:', error);
     }
-  };
+  }, [walletId]);
+
+  useEffect(() => {
+    if (walletId) {
+      fetchTransactions();
+    }
+  }, [walletId, fetchTransactions]);
 
   const sortedTransactions = [...transactions].sort((a, b) => {
     const aVal = sortBy === 'date' ? new Date(a.date) : a.amount;
