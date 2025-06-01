@@ -18,6 +18,10 @@ A comprehensive wallet system with backend API for managing digital wallets and 
 - **Nodemon** - Development server with auto-restart
 - **Postman** - API testing (collection included)
 
+### Hosting
+Backend API is hosted on Railway. - 
+ https://wallet-system-backend-production-95e2.up.railway.app/<API-ENDPOINTS>
+Frontend is hosted on Vercel.
 ## Prerequisites
 
 Before running this project, make sure you have the following installed:
@@ -40,9 +44,14 @@ npm install
 ```
 ## 3. Set Up Environment Variables
 Create a .env file in the root directory and add the following variables:
+# In Backend:
 ```bash
 MONGODB_URI=your_mongodb_connection_string
-```         
+``` 
+# In Frontend:
+```bash
+BACKEND_APP_API_URL=your_backend_api_url
+```        
 ## 4. Run the Application
 ```bash
 npm start
@@ -52,3 +61,10 @@ The API endpoints are defined in the routes directory. You can use tools like Po
 
 # Postman Collection
 The Postman collection is included in the repository for easy API testing. Import the collection into Postman to explore the available endpoints.
+
+                                                      │
+│                       Deployed to production URL:                        │
+│              https://coruscating-ganache-a26651.netlify.app              │
+│                                                                          │
+│   Unique deploy URL: https://683b7be7652ef6c8fb940f2c--coruscating-gan   │
+│                         ache-a26651.netlify.ap
