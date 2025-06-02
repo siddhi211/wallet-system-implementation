@@ -17,9 +17,15 @@ function TransactionsPage() {
       if (response.ok) {
         const data = await response.json();
         setTransactions(data);
+      } else if (response.status === 400) {
+        const errorData = await response.json();
+        alert(`Error loading transactions: ${errorData.error || 'Invalid request'}`);
+      } else {
+        console.error('Error fetching transactions: Server error');
       }
     } catch (error) {
       console.error('Error fetching transactions:', error);
+      alert('Network error. Please check your connection.');
     }
   }, [walletId]);
 

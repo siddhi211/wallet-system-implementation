@@ -45,9 +45,15 @@ function WalletPage() {
       if (response.ok) {
         const data = await response.json();
         setWallet(data);
+      } else if (response.status === 400) {
+        const errorData = await response.json();
+        alert(`Error loading wallet: ${errorData.error || 'Invalid wallet ID'}`);
+      } else {
+        console.error('Error fetching wallet: Server error');
       }
     } catch (error) {
       console.error('Error fetching wallet:', error);
+      alert('Network error. Please check your connection.');
     }
   }, [walletId]);
 
@@ -71,9 +77,16 @@ function WalletPage() {
         localStorage.setItem('walletId', data.id);
         setWalletId(data.id);
         setWallet(data);
+      } else if (response.status === 400) {
+        // Handle 400 errors with alert
+        alert(`Error: ${data.error || 'Invalid request'}`);
+      } else {
+        // Handle other errors
+        alert(`Error: ${data.error || 'Something went wrong'}`);
       }
     } catch (error) {
       console.error('Error setting up wallet:', error);
+      alert('Network error. Please check your connection and try again.');
     }
     setLoading(false);
   };
@@ -105,13 +118,18 @@ function WalletPage() {
         fetchWallet();
         setAmount('');
       } else {
-        // Handle server errors
         const errorData = await response.json();
-        alert(`Transaction failed: ${errorData.message || 'Unknown error'}`);
+        if (response.status === 400) {
+          // Handle 400 errors specifically
+          alert(`Transaction Error: ${errorData.error || 'Invalid transaction data'}`);
+        } else {
+          // Handle other server errors
+          alert(`Transaction failed: ${errorData.error || errorData.message || 'Unknown error'}`);
+        }
       }
     } catch (error) {
       console.error('Error executing transaction:', error);
-      alert('Transaction failed. Please try again.');
+      alert('Network error. Please check your connection and try again.');
     }
     setLoading(false);
   };
