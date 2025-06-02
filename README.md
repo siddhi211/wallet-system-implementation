@@ -1,6 +1,18 @@
 # Wallet System Implementation 
 
-A comprehensive wallet system with backend API for managing digital wallets and transactions.
+## Core Features
+1. Wallet Management : Create wallet with name and initial balance
+2. Transactions : Credit/Debit operations with balance validation
+3. Transaction History : View, sort, paginate, and export to CSV
+4. Balance Formatting : Comma-separated display
+5. Error Handling : Prevents overdrafts with popup alerts
+6. Session Management : localStorage persistence with logout functionality
+
+## Data Flow
+1. User creates wallet → stored in MongoDB + localStorage
+2. Transactions update wallet balance and create transaction records
+3. Frontend fetches data via REST API calls
+4. State management handles UI updates and conditional rendering
 
 ## Technologies Used
 
@@ -11,12 +23,13 @@ A comprehensive wallet system with backend API for managing digital wallets and 
 - **Mongoose** - MongoDB object modeling library
 - **dotenv** - Environment variable management
 
+### Frontend        
+- **React.js** - JavaScript library for building user interfaces
+- **React Router** - Library for routing in React applications
+- **Axios** - Promise-based HTTP client for making API requests
+
 ### Database
 - **MongoDB Atlas** - Cloud-hosted MongoDB service
-
-### Development Tools
-- **Nodemon** - Development server with auto-restart
-- **Postman** - API testing (collection included)
 
 ### Hosting
 Backend API is hosted on Railway. - 
@@ -33,7 +46,7 @@ Before running this project, make sure you have the following installed:
 - **MongoDB Atlas account** (free tier available)
 - **Git** (for version control)
 
-## Setup Instructions
+## Local Setup Instructions
 
 ### 1. Clone the Repository
 ```bash
@@ -54,19 +67,16 @@ MONGODB_URI=your_mongodb_connection_string
 ```bash
 REACT_APP_API_URL=your_backend_api_url
 ```        
-## 4. Run the Application
+## 4. Run the Application (Both Backend and Frontend)
 ```bash
 npm start
 ```
 ## 5. API Endpoints
-The API endpoints are defined in the routes directory. You can use tools like Postman to test them. 
+- POST /api/wallet/setup - Create wallet
+- POST /api/wallet/transact/:walletId - Execute transaction
+- GET /api/wallet/transactions - Fetch transaction history
+- GET /api/wallet/wallet/:id - Get wallet details
 
 # Postman Collection
 The Postman collection is included in the repository for easy API testing. Import the collection into Postman to explore the available endpoints.
 
-                                                      │
-│                       Deployed to production URL:                        │
-│              https://coruscating-ganache-a26651.netlify.app              │
-│                                                                          │
-│   Unique deploy URL: https://683b7be7652ef6c8fb940f2c--coruscating-gan   │
-│                         ache-a26651.netlify.ap
