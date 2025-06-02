@@ -93,7 +93,19 @@ The Postman collection is included in the repository for easy API testing. Impor
 ![image](https://github.com/user-attachments/assets/0e580087-53cc-44a5-9770-673b505fb1f7)
 ![image](https://github.com/user-attachments/assets/6cb050bc-0153-4f33-bd09-dbae2546c34e)
 
+## Error handling
 
+1. Debit amount> Balance (Insufficient balance alert)
+   ![image](https://github.com/user-attachments/assets/db93224d-e5a8-454c-8cb3-2e5f79d9262a)
+
+2. During wallet setup, initial balance <0
+   ![image](https://github.com/user-attachments/assets/40dd281e-aa8c-4537-aa57-547ac73f2efb)
+
+3. Network issues
+![image](https://github.com/user-attachments/assets/d9dbf9fd-78c9-4c71-b2cd-b1b2cd5c2466)
+
+## Setup Wallet Errors (POST /setup)
+Error Scenario Test Method Backend Response (400) Frontend Alert Missing Name Leave username field empty "Name is required and must be a string" "Error: Name is required and must be a string" Invalid Name Type Send non-string name via API "Name is required and must be a string" "Error: Name is required and must be a string" Missing Balance Don't provide balance field "Balance is required and must be a number" "Error: Balance is required and must be a number" Invalid Balance Type Send non-numeric balance "Balance is required and must be a number" "Error: Balance is required and must be a number" Negative Balance Enter negative initial balance "Balance cannot be negative" "Error: Balance cannot be negative"
 
 
 
