@@ -113,4 +113,38 @@ The Postman collection is included in the repository for easy API testing. Impor
 - Network connection failure → Alert: "Network error. Please try again"
 - Server unavailable → Alert: "Server error. Please try again later"
 
+# Database and Query Design Explanations
+1. Wallet Model
+```js
+{
+  name: String (required, trimmed),
+  balance: Number (required, default: 0, min: 0),
+  date: Date (auto-generated)
+}
+```
+2. Transaction Model
+```js
+{
+  walletId: ObjectId (reference to Wallet),
+  amount: Number (transaction amount),
+  balance: Number (wallet balance after transaction),
+  description: String (required, trimmed),
+  type: String (enum: 'CREDIT'/'DEBIT'),
+  date: Date (auto-generated)
+}
+```
 
+## Query Design Patterns
+1. ACID Transactions with MongoDB Sessions
+2. Wallet Setup queries
+3. Transaction queries
+4. Wallet details queries
+5. Transaction history queries
+
+## Design Strengths
+1. Data Integrity : ACID transactions ensure wallet balance always matches transaction history
+2. Audit Trail : Complete transaction history with balance snapshots
+3. Scalability : Pagination and field selection optimize large datasets
+4. Error Handling : Comprehensive validation and rollback mechanisms
+5. Financial Precision : Consistent rounding prevents floating-point errors
+6. Concurrency Safety : Session-based locking prevents race conditions
