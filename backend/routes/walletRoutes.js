@@ -9,32 +9,38 @@ const roundToFour = (num) => Math.round(num * 10000) / 10000;
 
 //  Setup wallet - POST /setup
 router.post('/setup', async (req, res) => {
+  const session = await mongoose.startSession();
+  session.startTransaction();
+
   try {
     const { balance, name } = req.body;
 
     if (!name || typeof name !== 'string') {
+      await session.abortTransaction();
       return res.status(400).json({ error: 'Name is required and must be a string' });
     }
 
     if (balance === undefined || balance === null || typeof balance !== 'number') {
+      await session.abortTransaction();
       return res.status(400).json({ error: 'Balance is required and must be a number' });
     }
 
     if (balance < 0) {
+      await session.abortTransaction();
       return res.status(400).json({ error: 'Balance cannot be negative' });
     }
 
     const roundedBalance = roundToFour(balance);
 
-    // Create wallet
+    // Create wallet within transaction
     const wallet = new Wallet({
       name: name.trim(),
       balance: roundedBalance
     });
 
-    await wallet.save();
+    await wallet.save({ session });
 
-    // Create initial transaction
+    // Create initial transaction within same transaction
     const transaction = new Transaction({
       walletId: wallet._id,
       amount: roundedBalance,
@@ -43,7 +49,10 @@ router.post('/setup', async (req, res) => {
       type: 'CREDIT'
     });
 
-    await transaction.save();
+    await transaction.save({ session });
+
+    // Commit both operations together
+    await session.commitTransaction();
 
     res.status(200).json({
       id: wallet._id,
@@ -54,8 +63,12 @@ router.post('/setup', async (req, res) => {
     });
 
   } catch (error) {
+    // Rollback both operations if either fails
+    await session.abortTransaction();
     console.error('Setup wallet error:', error);
     res.status(500).json({ error: 'Internal server error' });
+  } finally {
+    session.endSession();
   }
 });
 
