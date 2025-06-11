@@ -1,5 +1,7 @@
 # Wallet System Implementation (https://pro-wallet-system.netlify.app/)
 
+Loom video - https://www.loom.com/share/cc49e21bdeb647c293250ba439d9f253?sid=7dde2c12-d6c3-4d5b-ae86-b8e2a8453d08
+
 ## Core Features
 1. Wallet Management : Create wallet with name and initial balance
 2. Transactions : Credit/Debit operations with balance validation
